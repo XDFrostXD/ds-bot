@@ -14,6 +14,14 @@ client.on('ready', (c) => {
     console.log(`${c.user.username} сейчас в сети.`);   
 })
 
+client.on('interactionCreate', (intreaction) => {
+    if (!intreaction.isChatInputCommand()) return;
+        
+    if (intreaction.commandName === 'dad' && intreaction.user.username === 'myonyan') {
+        intreaction.reply('ты мой папа');
+    } else intreaction.reply('Иди нахуй, ты не мой батя');
+});
+
 client.on('messageCreate', (message) => {
         //console.log(message);
         console.log(message.author.username + ': ' + message.content);
@@ -33,7 +41,7 @@ client.on('messageCreate', (message) => {
     if (message.content === 'Полина пупуня'　|| message.content === 'полина пупуня' || message.content === 'я пупуня') {
         message.reply('https://tenor.com/view/nyatasha-nyanners-nyanners-vtuber-like-a-dragon-ishin-based-gif-10588927962711773317');
     }
-    if (message.content === 'Дурень' || message.content === 'дурень') {
+    if (message.content === 'Дурень' || message.content === 'дурень' || message.content === 'бот лох' || message.content === 'Бот лох')  {
         message.reply('Ебало');
     }    
 });

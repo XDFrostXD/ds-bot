@@ -1,6 +1,8 @@
 require('dotenv').config();
+const fs = require('fs');
 const { Client, IntentsBitField } = require('discord.js');
-
+const badReplies = ['Конечно', 'Ну да', 'Ебать ты лох', 'А как же ещё'];
+const randomBadReply = badReplies[Math.floor(Math.random() * badReplies.length)];
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -33,17 +35,41 @@ client.on('messageCreate', (message) => {
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply);
     }   
-    if (message.content === 'Полина ебень' || message.content === 'полина ебень' || message.content === 'я ебень') {
+    if (message.content === 'я ебень' || message.content === 'я даун' || message.content === 'Я даун' || message.content === 'Я ебень' && message.author.username === 'myonyan') {
+        const replies = ['Нет, ну что же ты', 'Не говори так', 'Я так не думаю'];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        message.reply(randomReply); 
+    } 
+    if (message.content.toLowerCase() === 'полина ебень') {
         const replies = ['Согласен', 'Абсолютно верно', 'Без сомнений'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply);
     }
-    if (message.content === 'Полина пупуня'　|| message.content === 'полина пупуня' || message.content === 'я пупуня') {
+    if (message.content.toLowerCase() === 'полина пупуня' || message.content === 'я пупуня') {
         message.reply('https://tenor.com/view/nyatasha-nyanners-nyanners-vtuber-like-a-dragon-ishin-based-gif-10588927962711773317');
     }
-    if (message.content === 'Дурень' || message.content === 'дурень' || message.content === 'бот лох' || message.content === 'Бот лох')  {
+    if (message.content.toLowerCase() === 'дурень' || message.content.toLowerCase() === 'бот лох')  {
         message.reply('Ебало');
-    }    
+    } 
+    if (message.content.toLowerCase() === 'го гэмблинг') {
+        const replies = ['Сейчас подумаю...', 'Секундочку...', 'Базару зиро, ща скажу...', 'Погодь-погодь, генерирую ответ...'];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        message.reply(randomReply).then(() => {
+            setTimeout(() => {
+                fs.readFile('gambling.txt', 'utf8', (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        message.reply('Произошла ошибка при чтении файла.');
+                        return;
+                    }
+
+                    const games = data.split('\n').filter(line => line.trim() !== '');
+                    const randomGame = games[Math.floor(Math.random() * games.length)];
+                    message.reply(randomGame);
+                });
+            }, 5420);
+        });
+    }
 });
 
 client.login(process.env.TOKEN);

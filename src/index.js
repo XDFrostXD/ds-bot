@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
-const { Client, IntentsBitField } = require('discord.js');
+const { Client, IntentsBitField, InteractionCollector } = require('discord.js');
+const internal = require('stream');
 const badReplies = ['Конечно', 'Ну да', 'Ебать ты лох', 'А как же ещё'];
 const randomBadReply = badReplies[Math.floor(Math.random() * badReplies.length)];
 const client = new Client({
@@ -19,9 +20,12 @@ client.on('ready', (c) => {
 client.on('interactionCreate', (intreaction) => {
     if (!intreaction.isChatInputCommand()) return;
         
-    if (intreaction.commandName === 'dad' && intreaction.user.username === 'myonyan') {
-        intreaction.reply('ты мой папа');
-    } else intreaction.reply('Иди нахуй, ты не мой батя');
+    if (intreaction.commandName === 'add') {
+        const num1 = intreaction.options.get('first-number').value;
+        const num2 = intreaction.options.get('second-number').value;
+
+        intreaction.reply(`По моим расчётам, тут будет ${num1+num2}, а ещё я посчитал, что ты пидор`);
+    }
 });
 
 client.on('messageCreate', (message) => {
@@ -31,7 +35,7 @@ client.on('messageCreate', (message) => {
         return;
     }
     if (message.author.username === 'muerv') {
-        const replies = ['Молчать, женщина', 'Тише-тише, терпила', 'Заткнись, пупуня', 'Как же ты меня заебёшь', 'Ротик'];
+        const replies = ['Заткнись, пупуня', 'Тише-тише, терпила', 'Молчать, женщина', 'Как же ты меня заебёшь', 'Ротик'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply);
     }   

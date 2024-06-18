@@ -1,7 +1,7 @@
 {
   "name": "ds-bot",
-  "version": "1.1.1",
-  "description": "me(a)th update",
+  "version": "1.1.2",
+  "description": "embed",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

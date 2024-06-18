@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-const { Client, IntentsBitField, InteractionCollector } = require('discord.js');
+const { Client, IntentsBitField, InteractionCollector, EmbedBuilder } = require('discord.js');
 const internal = require('stream');
 const badReplies = ['Конечно', 'Ну да', 'Ебать ты лох', 'А как же ещё'];
 const randomBadReply = badReplies[Math.floor(Math.random() * badReplies.length)];
@@ -26,7 +26,43 @@ client.on('interactionCreate', (intreaction) => {
 
         intreaction.reply(`По моим расчётам, тут будет ${num1+num2}, а ещё я посчитал, что ты пидор`);
     }
+    if (intreaction.commandName === 'embed') {
+        const embed = new EmbedBuilder()
+        .setTitle("Embed title")
+        .setDescription("Embed description")
+        .setColor(0xdabaff)
+        .addFields({ 
+            name: 'Field title', 
+            value: 'Some random value', 
+            inline: true,
+        }, { 
+            name: ' 2nd Field title', 
+            value: 'Some random value', 
+            inline: true,
+        });
+
+        intreaction.reply({ embeds: [embed]});
+    }
 });
+
+client.on('messageCreate', (message) => {
+    if (message.content.toLowerCase() === 'embed') {
+        const embed = new EmbedBuilder()
+        .setTitle("Embed title")
+        .setDescription("Embed description")
+        .setColor(0xdabaff)
+        .addFields({ 
+            name: 'Field title', 
+            value: 'Some random value', 
+            inline: true,
+        }, { 
+            name: ' 2nd Field title', 
+            value: 'Some random value', 
+            inline: true,
+        });
+        message.channel.send({ embeds: [embed] });
+    }
+})
 
 client.on('messageCreate', (message) => {
         //console.log(message);
@@ -35,7 +71,8 @@ client.on('messageCreate', (message) => {
         return;
     }
     if (message.author.username === 'muerv') {
-        const replies = ['Заткнись, пупуня', 'Тише-тише, терпила', 'Молчать, женщина', 'Как же ты меня заебёшь', 'Ротик'];
+        const replies = ['Заткнись, пупуня', 'Тише-тише, терпила', 'Молчать, женщина', 'Как же ты меня заебёшь', 'Ротик', 
+            'https://sun9-48.userapi.com/impg/baIRpn1uYiHSr23Ak9q0hBah7LfK2HsaeMVE3Q/nlHJbAiDVjs.jpg?size=1920x1080&quality=96&sign=85df5e0dae5637ddba0f4d6a2f80918d&type=album'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply);
     }   

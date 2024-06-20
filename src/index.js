@@ -1,9 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
 const { Client, IntentsBitField, InteractionCollector, EmbedBuilder } = require('discord.js');
-const internal = require('stream');
-const badReplies = ['Конечно', 'Ну да', 'Ебать ты лох', 'А как же ещё'];
-const randomBadReply = badReplies[Math.floor(Math.random() * badReplies.length)];
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -70,17 +67,25 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         return;
     }
+
+    const agrReplies = ['Конечно', 'Ну да', 'Ебать ты лох', 'А как же ещё'];
+
     if (message.author.username === 'muerv') {
         const replies = ['Заткнись, пупуня', 'Тише-тише, терпила', 'Молчать, женщина', 'Как же ты меня заебёшь', 'Ротик', 
             'https://sun9-48.userapi.com/impg/baIRpn1uYiHSr23Ak9q0hBah7LfK2HsaeMVE3Q/nlHJbAiDVjs.jpg?size=1920x1080&quality=96&sign=85df5e0dae5637ddba0f4d6a2f80918d&type=album'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply);
     }   
-    if (message.content === 'я ебень' || message.content === 'я даун' || message.content === 'Я даун' || message.content === 'Я ебень' && message.author.username === 'myonyan') {
+    if (message.content.toLowerCase() === 'я ебень' || message.content.toLowerCase() === 'я даун' && message.author.username === 'myonyan') {
         const replies = ['Нет, ну что же ты', 'Не говори так', 'Я так не думаю'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         message.reply(randomReply); 
-    } 
+    } else if(message.content.toLowerCase() === 'я ебень' || message.content.toLowerCase() === 'я даун') {
+            
+            const randomAgrReply = agrReplies[Math.floor(Math.random() * agrReplies.length)];
+        message.reply(randomAgrReply); 
+        }
+
     if (message.content.toLowerCase() === 'полина ебень') {
         const replies = ['Согласен', 'Абсолютно верно', 'Без сомнений'];
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
@@ -111,6 +116,12 @@ client.on('messageCreate', (message) => {
             }, 5420);
         });
     }
+    if (message.content === 'https://tenor.com/view/sukuna-nuh-uh-lock-in-gif-2118468025980683374') {
+        message.channel.send('https://tenor.com/view/yuh-uh-sukuna-lock-in-gif-14822835900679146035');
+    } else if (message.content === 'https://tenor.com/view/yuh-uh-sukuna-lock-in-gif-14822835900679146035') {
+        message.channel.send('https://tenor.com/view/sukuna-nuh-uh-lock-in-gif-2118468025980683374');
+    }
 });
+
 
 client.login(process.env.TOKEN);
